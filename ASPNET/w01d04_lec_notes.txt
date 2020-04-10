@@ -1,0 +1,69 @@
+FOR 3.1 
+I had to add this for services:
+services.AddMvc(options => options.EnableEndpointRouting = false);
+i guess because i have 3.1
+
+
+
+
+ASP.NET
+- MVC Framework
+  - Models
+  - Views
+  - Controllers
+
+- Routing handled in controller
+
+dotnet new web --no-https -o ProjectName
+	- web vs console
+	- no-https --> ssl certs
+	
+DEVELOPER TOOLING
+Point out Configure method in Startup.cs
+
+Command Line:
+	setx ASPNETCORE_ENVIRONMENT Development
+
+PowerShell:
+	[Environment]::SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT","Development","User")
+
+Mac:
+	export ASPNETCORE_ENVIRONMENT=Development
+
+
+explain dotnet watch run vs dotnet run
+
+Need to add MVC for use in ConfigureServices
+	services.AddMVC();
+
+Then Use MVC in Configure
+	app.UseMVC();
+
+Setting up Controller
+- Controller Folder
+  - Controller File
+
+using Microsoft.AspNetCore.Mvc;
+namespace YourNamespace.Controllers     //be sure to use your own project's namespace!
+{
+    public class HelloController : Controller   //remember inheritance??
+    {
+        //for each route this controller is to handle:
+        [HttpGet]       //type of request
+        [Route("")]     //associated route string (exclude the leading /)
+        public string Index()
+        {
+            return "Hello World from HelloController!";
+        }
+    }
+}
+
+Routing:
+[HttpMethod("route")]
+
+With parameters!
+[HttpMethod("route/{parameter}")]
+
+RENDERING VIEWS!!
+- Emmet stuff
+- File > Preferences > Settings > Search bar "emmet" > Edit in settings.json > "aspnetcorerazor": "html", "razor": "html"dotn
