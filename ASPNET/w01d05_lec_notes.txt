@@ -1,0 +1,14 @@
+at top of cshtml:
+@using {{namespace}}.Models
+@model {{modelname}}
+
+
+OR
+
+
+@model {{namespace}}.Models.{{modelname}}
+
+
+In controller -> pass model through View() return
+
+
