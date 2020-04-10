@@ -1,3 +1,6 @@
+@* What kind of object was passed through from the back-end? *@
+@model ASPNETDemo.Models.SuperHero
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +9,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Later losers!</h1>
+    @* Showing all the data from that model passed through from the back-end *@
+    <ul>
+        <li>Name: @Model.Name</li>
+        <li>Alias: @Model.Alias</li>
+        <li>Age: @Model.Age</li>
+        <li>Main Power: @Model.MainPower</li>
+        <li>Main Weakness: @Model.MainWeakness</li>
+        <li>SideKick: @Model.SideKick</li>
+    </ul>
 </body>
 </html>

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using ASPNETDemo.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNETDemo.Controllers
@@ -9,31 +11,31 @@ namespace ASPNETDemo.Controllers
         // ViewResult is the return type for any methods that ONLY render an html page
         public ViewResult Index()
         {
+            // Declare a list of strings that I want to send through
+            // to my cshtml
+            ViewBag.SideKicks = new List<string>{"Robin", "Batgirl", "Barnacle Boy", "Speedy", "Kid Flash", "Bucky Barnes"};
+            // Passing the list of strings through to the cshmtml
             return View();
         }
 
-        [HttpGet("{word}")]
-        public IActionResult Goodbye(object word)
+        [HttpPost("newhero")]
+        public IActionResult Goodbye(SuperHero fromForm)
         {
-            if(!(word is int))
+            if(ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Thanks", fromForm);
             }
-
-            if((int)word==10)
+            else 
             {
-                return RedirectToAction("Thanks");
-            }
-            else
-            {
-                return View();
+                ViewBag.SideKicks = new List<string>{"Robin", "Batgirl", "Barnacle Boy", "Speedy", "Kid Flash", "Bucky Barnes"};
+                return View("Index", fromForm);
             }
         }
 
         [HttpGet("thanks")]
-        public ViewResult Thanks()
+        public ViewResult Thanks(SuperHero fromRedirect)
         {
-            return View();
+            return View(fromRedirect);
         }
 
 

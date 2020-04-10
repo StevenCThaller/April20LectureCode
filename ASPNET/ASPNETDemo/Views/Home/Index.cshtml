@@ -1,3 +1,7 @@
+@* Declaring the data type of the object sent through from the back end *@
+@* the lower case m denotes that this is declaring the TYPE of the object *@
+@model ASPNETDemo.Models.SuperHero
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +12,41 @@
 <body>
     <div class="container">
         <h1>Hello everyone</h1>
-        <a href="/goodbye">Good Bye!</a>
-        <a href="/10">Go to 10</a>
+        <form asp-controller="Home" asp-action="Goodbye" method="POST">
+            <span asp-validation-for="Name"></span>
+            <label asp-for="Name"></label>
+            <input type="text" asp-for="Name">
+            <br>
+            <span asp-validation-for="Alias"></span>
+            <label asp-for="Alias"></label>
+            <input type="text" asp-for="Alias">
+            <br>
+            <span asp-validation-for="Age"></span>
+            <label asp-for="Age"></label>
+            <input type="number" asp-for="Age">
+            <br>
+            <span asp-validation-for="MainPower"></span>
+            <label asp-for="MainPower"></label>
+            <input type="text" asp-for="MainPower">
+            <br>
+            <span asp-validation-for="MainWeakness"></span>
+            <label asp-for="MainWeakness"></label>
+            <input type="text" asp-for="MainWeakness">
+            <br>
+            <span asp-validation-for="SideKick"></span>
+            <label asp-for="SideKick"></label>
+            <select asp-for="SideKick">
+                @* Looping through the data passed through from the back end *@
+                @* Notice @Model with a capital M. This is to denote that it's *@
+                @* the ACTUAL object that was passed through *@
+                @foreach(string sideKick in ViewBag.SideKicks)
+                {
+                    <option value="@sideKick">@sideKick</option>
+                }
+            </select>
+            <br>
+            <input type="submit" value="Submit Superhero">
+        </form>
     </div>
 </body>
 </html>
