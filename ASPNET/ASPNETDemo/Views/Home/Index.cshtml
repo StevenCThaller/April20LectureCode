@@ -1,6 +1,7 @@
 @* Declaring the data type of the object sent through from the back end *@
 @* the lower case m denotes that this is declaring the TYPE of the object *@
-@model ASPNETDemo.Models.SuperHero
+@using ASPNETDemo.Models;
+@model IndexWrapper;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,42 +12,53 @@
 </head>
 <body>
     <div class="container">
-        <h1>Hello everyone</h1>
+        <h1>My Super Page</h1>
+        <h3>Create a Super Hero</h3>
         <form asp-controller="Home" asp-action="Goodbye" method="POST">
-            <span asp-validation-for="Name"></span>
-            <label asp-for="Name"></label>
-            <input type="text" asp-for="Name">
+            <span asp-validation-for="Hero.Name"></span>
+            <label asp-for="Hero.Name"></label>
+            <input type="text" asp-for="Hero.Name">
             <br>
-            <span asp-validation-for="Alias"></span>
-            <label asp-for="Alias"></label>
-            <input type="text" asp-for="Alias">
+            <span asp-validation-for="Hero.Alias"></span>
+            <label asp-for="Hero.Alias"></label>
+            <input type="text" asp-for="Hero.Alias">
             <br>
-            <span asp-validation-for="Age"></span>
-            <label asp-for="Age"></label>
-            <input type="number" asp-for="Age">
+            <span asp-validation-for="Hero.Age"></span>
+            <label asp-for="Hero.Age"></label>
+            <input type="number" asp-for="Hero.Age">
             <br>
-            <span asp-validation-for="MainPower"></span>
-            <label asp-for="MainPower"></label>
-            <input type="text" asp-for="MainPower">
+            <span asp-validation-for="Hero.MainPower"></span>
+            <label asp-for="Hero.MainPower"></label>
+            <input type="text" asp-for="Hero.MainPower">
             <br>
-            <span asp-validation-for="MainWeakness"></span>
-            <label asp-for="MainWeakness"></label>
-            <input type="text" asp-for="MainWeakness">
+            <span asp-validation-for="Hero.MainWeakness"></span>
+            <label asp-for="Hero.MainWeakness"></label>
+            <input type="text" asp-for="Hero.MainWeakness">
             <br>
-            <span asp-validation-for="SideKick"></span>
-            <label asp-for="SideKick"></label>
-            <select asp-for="SideKick">
+            <span asp-validation-for="Hero.SideKick"></span>
+            <label asp-for="Hero.SideKick"></label>
+            <select asp-for="Hero.SideKick">
                 @* Looping through the data passed through from the back end *@
                 @* Notice @Model with a capital M. This is to denote that it's *@
                 @* the ACTUAL object that was passed through *@
-                @foreach(string sideKick in ViewBag.SideKicks)
+                @foreach(SideKick sideKick in @Model.SideKicks)
                 {
-                    <option value="@sideKick">@sideKick</option>
+                    <option value="@sideKick.Name">@sideKick.Name</option>
                 }
             </select>
             <br>
             <input type="submit" value="Submit Superhero">
         </form>
+        <br><br>
+        <h3>Create a SideKick</h3>
+        <form asp-action="KickIt" asp-controller="Home" method="post">
+            <span asp-validation-for="Kick.Name"></span>
+            <label asp-for="Kick.Name"></label>
+            <input type="text" asp-for="Kick.Name">
+            <br>
+            <input type="submit" value="Submit Sidekick">
+        </form>
+
     </div>
 </body>
 </html>

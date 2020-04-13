@@ -11,29 +11,48 @@ namespace ASPNETDemo.Controllers
         // ViewResult is the return type for any methods that ONLY render an html page
         public ViewResult Index()
         {
-            // Declare a list of strings that I want to send through
-            // to my cshtml
-            ViewBag.SideKicks = new List<string>{"Robin", "Batgirl", "Barnacle Boy", "Speedy", "Kid Flash", "Bucky Barnes"};
-            // Passing the list of strings through to the cshmtml
-            return View();
+            IndexWrapper vMod = new IndexWrapper();
+            vMod.SideKicks = new List<SideKick>(){new SideKick("Robin"), new SideKick("Bat girl"), new SideKick("Kid Flash"), new SideKick("Barnacle Boy")};
+            return View(vMod);
         }
 
-        [HttpPost("newhero")]
-        public IActionResult Goodbye(SuperHero fromForm)
+        [HttpPost("kickitup")]
+        public IActionResult KickIt(IndexWrapper wrapper)
         {
             if(ModelState.IsValid)
             {
-                return RedirectToAction("Thanks", fromForm);
+                return RedirectToAction("Gracias", wrapper.Kick);
+            }
+            else
+            {
+                wrapper.SideKicks = new List<SideKick>(){new SideKick("Robin"), new SideKick("Bat girl"), new SideKick("Kid Flash"), new SideKick("Barnacle Boy")};
+                return View("Index", wrapper);
+            }
+
+        }
+
+        [HttpPost("newhero")]
+        public IActionResult Goodbye(IndexWrapper wrapper)
+        {
+            if(ModelState.IsValid)
+            {
+                return RedirectToAction("Thanks", wrapper.Hero);
             }
             else 
             {
-                ViewBag.SideKicks = new List<string>{"Robin", "Batgirl", "Barnacle Boy", "Speedy", "Kid Flash", "Bucky Barnes"};
-                return View("Index", fromForm);
+                wrapper.SideKicks = new List<SideKick>(){new SideKick("Robin"), new SideKick("Bat girl"), new SideKick("Kid Flash"), new SideKick("Barnacle Boy")};
+                return View("Index", wrapper);
             }
         }
 
         [HttpGet("thanks")]
         public ViewResult Thanks(SuperHero fromRedirect)
+        {
+            return View(fromRedirect);
+        }
+
+        [HttpGet("gracias")]
+        public ViewResult Gracias(SideKick fromRedirect)
         {
             return View(fromRedirect);
         }
