@@ -7,6 +7,7 @@ namespace ASPNETDemo.Controllers
 {
     public class HomeController : Controller
     {
+    
         [HttpGet("")]
         // ViewResult is the return type for any methods that ONLY render an html page
         public ViewResult Index()
@@ -56,7 +57,6 @@ namespace ASPNETDemo.Controllers
         {
             return View(fromRedirect);
         }
-
 
     }
 }
