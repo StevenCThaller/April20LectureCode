@@ -1,0 +1,46 @@
+@model Burrito
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Add a burrito</h1>
+    <a href="/allritos">Show em all</a>
+    <form asp-action="NewBurrito" asp-controller="Home" method="post">
+        <span asp-validation-for="Name"></span>
+        <label asp-for="Name"></label>
+        <input asp-for="Name">
+        <br>
+        <span asp-validation-for="Tortilla"></span>
+        <label asp-for="Tortilla"></label>
+        <input asp-for="Tortilla">
+        <br>
+        <span asp-validation-for="Meat"></span>
+        <label asp-for="Meat"></label>
+        <input asp-for="Meat">
+        <br>
+        <span asp-validation-for="Rice"></span>
+        <label asp-for="Rice"></label>
+        <input asp-for="Rice">
+        <br>
+        <span asp-validation-for="Beans"></span>
+        <label asp-for="Beans"></label>
+        <input asp-for="Beans">
+        <br>
+        <span asp-validation-for="Vegetable"></span>
+        <label asp-for="Vegetable"></label>
+        <input asp-for="Vegetable">
+        <br>
+        <span asp-validation-for="Guac"></span>
+        <label asp-for="Guac"></label>
+        <input asp-for="Guac">
+        <br>
+        <input type="submit" value="Make That 'Rito!">
+    </form>
+</body>
+</html>

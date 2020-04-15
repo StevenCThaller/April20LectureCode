@@ -1,0 +1,44 @@
+@model List<Burrito>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All the Burritos</h1>
+    <a href="/">Home</a>
+
+    <table>
+        <thead>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Tortilla</th>
+            <th>Meat</th>
+            <th>Rice</th>
+            <th>Beans</th>
+            <th>Vegetable</th>
+            <th>Guac</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            @foreach(Burrito rito in @Model)
+            {
+                <tr>
+                    <td>@rito.BurritoId</td>
+                    <td>@rito.Name</td>
+                    <td>@rito.Tortilla</td>
+                    <td>@rito.Meat</td>
+                    <td>@rito.Rice</td>
+                    <td>@rito.Beans</td>
+                    <td>@rito.Vegetable</td>
+                    <td>@rito.Guac</td>
+                    <td><a href="/editrito/@rito.BurritoId">Edit</a>|<a href="/deleterito/@rito.BurritoId">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
