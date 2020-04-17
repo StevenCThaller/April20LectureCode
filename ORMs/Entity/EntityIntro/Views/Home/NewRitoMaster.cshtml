@@ -1,0 +1,23 @@
+@model RitoMaster
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Add a Burrito Master!!</h1>
+    <form asp-action="AddMaster" asp-controller="Home" method="post">
+        <span asp-validation-for="FirstName"></span>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName">
+        <br>
+        <span asp-validation-for="LastName"></span>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName">
+        <br>
+        <input type="submit" value="SUBMIT">
+    </form>
+</body>
+</html>

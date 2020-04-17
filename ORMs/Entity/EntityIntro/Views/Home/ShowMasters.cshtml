@@ -1,0 +1,39 @@
+@model List<RitoMaster>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All the Rito Masters</h1>
+    <table>
+        <thead>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Burritos</th>
+        </thead>
+        <tbody>
+            @foreach(var master in @Model)
+            {
+                <tr>
+                    <td>@master.RitoMasterId</td>
+                    <td>@master.FirstName</td>
+                    <td>@master.LastName</td>
+                    <td>
+                        <ul>
+                            @foreach(var rito in master.Burritos)
+                            {
+                                <li>@rito.Name</li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+

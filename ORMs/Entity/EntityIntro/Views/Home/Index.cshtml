@@ -44,6 +44,15 @@
         <label asp-for="Guac"></label>
         <input asp-for="Guac">
         <br>
+        <span asp-validation-for="RitoMasterId"></span>
+        <label asp-for="RitoMasterId"></label>
+        <select asp-for="RitoMasterId">
+            @foreach(var master in ViewBag.RitoMasters)
+            {
+                <option value="@master.RitoMasterId">@master.FirstName @master.LastName</option>
+            }
+        </select>
+        <br>
         <input type="submit" value="Make That 'Rito!">
     </form>
 </body>

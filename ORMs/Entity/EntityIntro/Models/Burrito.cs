@@ -26,6 +26,13 @@ namespace EntityIntro.Models
         [Required]
         public bool Guac { get; set; }
 
+        // Foreign Key to the RitoMaster
+        [Display(Name="Master: ")]
+        public int RitoMasterId { get; set; }
+        // Navigation property: This is not actually translated to the database
+        public RitoMaster RitoMaster { get; set; }
+
+
         // DATETIMES
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } =  DateTime.Now;

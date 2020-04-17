@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using EntityIntro.Models;
+// This is needed when using Include statements so bring it in if you
+// ever have a One to Many or Many to Many relationship
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityIntro.Controllers
 {
@@ -19,14 +22,22 @@ namespace EntityIntro.Controllers
         [HttpGet("")]
         public ViewResult Index()
         {
+            ViewBag.RitoMasters = dbContext.RitoMasters;
             return View();
         }
 
         [HttpGet("allritos")]
         public ViewResult ShowAll()
         {
-            List<Burrito> AllRitos = dbContext.Burritos.ToList();
-            return View(AllRitos);
+            List<Burrito> AllBurritos = dbContext.Burritos.Include(b => b.RitoMaster).ToList();
+            return View(AllBurritos);
+        }
+
+        [HttpGet("allmasters")]
+        public ViewResult ShowMasters()
+        {
+            List<RitoMaster> AllMasters = dbContext.RitoMasters.Include(m => m.Burritos).ToList();
+            return View(AllMasters);
         }
 
         [HttpPost("newrito")]
@@ -37,6 +48,7 @@ namespace EntityIntro.Controllers
 
                 if(dbContext.Burritos.Any(b => b.Name == fromForm.Name))
                 {
+                    ViewBag.RitoMasters = dbContext.RitoMasters;
                     ModelState.AddModelError("Name", "You cannot create a burrito with the same name as an existing burrito.");
                     return View("Index");
                 }
@@ -51,6 +63,7 @@ namespace EntityIntro.Controllers
             }
             else
             {
+                ViewBag.RitoMasters = dbContext.RitoMasters;
                 return View("Index");
             }
         }
@@ -117,6 +130,32 @@ namespace EntityIntro.Controllers
             dbContext.SaveChanges();
 
             return RedirectToAction("ShowAll");
+        }
+
+        [HttpGet("newritomaster")]
+        public ViewResult NewRitoMaster()
+        {
+            return View();
+        }
+
+        [HttpPost("newritomaster")]
+        public IActionResult AddMaster(RitoMaster fromForm)
+        {
+            if(ModelState.IsValid)
+            {
+                if(dbContext.RitoMasters.Any(m => m.FirstName == fromForm.FirstName && m.LastName == fromForm.LastName))
+                {
+                    ModelState.AddModelError("FirstName", "That 'rito master already exists.");
+                    return View("NewRitoMaster");
+                }
+                dbContext.Add(fromForm);
+                dbContext.SaveChanges();
+                return RedirectToAction("ShowMasters");
+            }
+            else
+            {
+                return View("NewRitoMaster");
+            }
         }
     }
 }

@@ -7,5 +7,6 @@ namespace EntityIntro.Models
         public MyContext(DbContextOptions options) : base(options) {}
 
         public DbSet<Burrito> Burritos { get; set; }
+        public DbSet<RitoMaster> RitoMasters { get; set; }
     }
 }

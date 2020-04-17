@@ -21,10 +21,11 @@
             <th>Beans</th>
             <th>Vegetable</th>
             <th>Guac</th>
+            <th>Master</th>
             <th>Actions</th>
         </thead>
         <tbody>
-            @foreach(Burrito rito in @Model)
+            @foreach(var rito in @Model)
             {
                 <tr>
                     <td>@rito.BurritoId</td>
@@ -35,10 +36,13 @@
                     <td>@rito.Beans</td>
                     <td>@rito.Vegetable</td>
                     <td>@rito.Guac</td>
+                    <td>@rito.RitoMaster.FirstName @rito.RitoMaster.LastName</td>
                     <td><a href="/editrito/@rito.BurritoId">Edit</a>|<a href="/deleterito/@rito.BurritoId">Delete</a></td>
                 </tr>
             }
         </tbody>
     </table>
+
+    
 </body>
 </html>
