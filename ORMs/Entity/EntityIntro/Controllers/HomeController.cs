@@ -34,6 +34,13 @@ namespace EntityIntro.Controllers
         {
             if(ModelState.IsValid)
             {
+
+                if(dbContext.Burritos.Any(b => b.Name == fromForm.Name))
+                {
+                    ModelState.AddModelError("Name", "You cannot create a burrito with the same name as an existing burrito.");
+                    return View("Index");
+                }
+
                 // Local changes
                 dbContext.Add(fromForm);
                 
@@ -57,12 +64,19 @@ namespace EntityIntro.Controllers
         }
 
         [HttpPost("updaterito/{ritoId}")]
+        // [HttpPut("updaterito/{ritoId}")]
         public IActionResult UpdateBurrito(int ritoId, Burrito fromForm)
         {
             System.Console.WriteLine($"What's the burrito Id? {ritoId}");
 
             if(ModelState.IsValid)
             {
+                
+                if(dbContext.Burritos.Any(b => b.Name == fromForm.Name && b.BurritoId != ritoId))
+                {
+                    ModelState.AddModelError("Name", "You cannot create a burrito with the same name as an existing burrito.");
+                    return View("EditRito", fromForm);
+                }
                 // Burrito ToUpdate = dbContext.Burritos.FirstOrDefault(b => b.BurritoId == ritoId);
                 // ToUpdate.Name = fromForm.Name;
                 // ToUpdate.Tortilla = fromForm.Tortilla;

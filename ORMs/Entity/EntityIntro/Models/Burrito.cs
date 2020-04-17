@@ -1,6 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
+// for not mapping a field to the db
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace EntityIntro.Models
 {
     public class Burrito
@@ -26,5 +29,10 @@ namespace EntityIntro.Models
         // DATETIMES
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } =  DateTime.Now;
+
+        [NotMapped]
+        [Required]
+        [Compare("Meat")]
+        public string ConfirmMeat { get; set; }
     }
 }
