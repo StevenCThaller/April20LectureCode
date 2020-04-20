@@ -1,0 +1,39 @@
+@model OneRitoWrapper
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>@Model.ThisRito.Name</h1>
+
+    <ul>
+        <li>Created By: @Model.ThisRito.RitoMaster.FirstName @Model.ThisRito.RitoMaster.LastName</li>
+        <li>Tortilla: @Model.ThisRito.Tortilla</li>
+        <li>Meat: @Model.ThisRito.Meat</li>
+        <li>Rice: @Model.ThisRito.Rice</li>
+        <li>Beans: @Model.ThisRito.Beans</li>
+        <li>Guac: @Model.ThisRito.Guac</li>
+        <li>Veggies:
+            <ul>
+                @foreach(var veg in Model.ThisRito.VegetablesInBurrito)
+                {
+                    <li>@veg.Vegetable.Name</li>
+                }
+            </ul>
+        </li>
+    </ul>
+    <form asp-action="NewVegRito" asp-controller="Home" asp-route-ritoId="@Model.ThisRito.BurritoId" method="post">        
+        <select asp-for="VegRito.VegetableId">
+            @foreach(var veg in Model.Veggies)
+            {
+                <option value="@veg.VegetableId">@veg.Name</option>
+            }
+        </select>
+        <br>
+        <input type="submit" value="Add Veggie">
+    </form>
+</body>
+</html>

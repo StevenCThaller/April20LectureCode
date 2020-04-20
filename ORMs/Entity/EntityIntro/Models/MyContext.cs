@@ -8,5 +8,7 @@ namespace EntityIntro.Models
 
         public DbSet<Burrito> Burritos { get; set; }
         public DbSet<RitoMaster> RitoMasters { get; set; }
+        public DbSet<Vegetable> Veggies { get; set; }
+        public DbSet<VegRito> VegRitos { get; set; }
     }
 }

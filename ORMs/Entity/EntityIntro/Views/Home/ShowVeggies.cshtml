@@ -1,0 +1,32 @@
+@model List<Vegetable>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All the Vegetables</h1>
+    <a href="/newveg">New Veg</a>
+
+    <table>
+        <thead>
+            <th>Id</th>
+            <th>Name</th>
+        </thead>
+        <tbody>
+            @foreach(var veg in @Model)
+            {
+                <tr>
+                    <td>@veg.VegetableId</td>
+                    <td>@veg.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    
+</body>
+</html>

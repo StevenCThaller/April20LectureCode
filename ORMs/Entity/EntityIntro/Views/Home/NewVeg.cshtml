@@ -1,0 +1,20 @@
+@model Vegetable
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Make a new veggie</h1>
+    <a href="/allveggies">Back to veggies</a>
+    <form asp-action="CreateVeggie" asp-controller="Home" method="post">
+        <span asp-validation-for="Name"></span>
+        <label asp-for="Name"></label>
+        <input asp-for="Name">
+        <br>
+        <input type="submit" value="SUBMIT VEG">
+    </form>
+</body>
+</html>

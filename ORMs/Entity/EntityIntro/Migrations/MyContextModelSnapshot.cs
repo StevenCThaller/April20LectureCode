@@ -45,9 +45,6 @@ namespace EntityIntro.Migrations
 
                     b.Property<DateTime>("UpdatedAt");
 
-                    b.Property<string>("Vegetable")
-                        .IsRequired();
-
                     b.HasKey("BurritoId");
 
                     b.HasIndex("RitoMasterId");
@@ -75,11 +72,63 @@ namespace EntityIntro.Migrations
                     b.ToTable("RitoMasters");
                 });
 
+            modelBuilder.Entity("EntityIntro.Models.VegRito", b =>
+                {
+                    b.Property<int>("VegRitoId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BurritoId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.Property<int>("VegetableId");
+
+                    b.HasKey("VegRitoId");
+
+                    b.HasIndex("BurritoId");
+
+                    b.HasIndex("VegetableId");
+
+                    b.ToTable("VegRitos");
+                });
+
+            modelBuilder.Entity("EntityIntro.Models.Vegetable", b =>
+                {
+                    b.Property<int>("VegetableId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("VegetableId");
+
+                    b.ToTable("Veggies");
+                });
+
             modelBuilder.Entity("EntityIntro.Models.Burrito", b =>
                 {
                     b.HasOne("EntityIntro.Models.RitoMaster", "RitoMaster")
                         .WithMany("Burritos")
                         .HasForeignKey("RitoMasterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EntityIntro.Models.VegRito", b =>
+                {
+                    b.HasOne("EntityIntro.Models.Burrito", "Burrito")
+                        .WithMany("VegetablesInBurrito")
+                        .HasForeignKey("BurritoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EntityIntro.Models.Vegetable", "Vegetable")
+                        .WithMany("BurritosWithVegetable")
+                        .HasForeignKey("VegetableId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

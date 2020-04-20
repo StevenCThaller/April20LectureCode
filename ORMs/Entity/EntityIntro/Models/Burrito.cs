@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 // for not mapping a field to the db
@@ -21,8 +22,11 @@ namespace EntityIntro.Models
         public string Rice { get; set; }
         [Required]
         public string Beans { get; set; }
-        [Required]
-        public string Vegetable { get; set; }
+        
+        // Navigation Property
+        public List<VegRito> VegetablesInBurrito { get; set; }
+
+
         [Required]
         public bool Guac { get; set; }
 

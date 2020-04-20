@@ -26,11 +26,47 @@ namespace EntityIntro.Controllers
             return View();
         }
 
+        [HttpGet("newveg")]
+        public ViewResult NewVeg()
+        {
+            return View();
+        }
+
+        [HttpPost("createveggie")]
+        public IActionResult CreateVeggie(Vegetable fromForm)
+        {
+            if(ModelState.IsValid)
+            {
+                dbContext.Add(fromForm);
+                dbContext.SaveChanges();
+                return RedirectToAction("ShowVeggies");
+            }
+            else
+            {
+                return View("NewVeg");
+            }
+        }
+
         [HttpGet("allritos")]
         public ViewResult ShowAll()
         {
-            List<Burrito> AllBurritos = dbContext.Burritos.Include(b => b.RitoMaster).ToList();
+            List<Burrito> AllBurritos = dbContext.Burritos
+                .Include(b => b.RitoMaster)
+                .Include(b => b.VegetablesInBurrito)
+                .ThenInclude(v => v.Vegetable)
+                .ToList();
             return View(AllBurritos);
+        }
+
+        [HttpGet("allveggies")]
+        public ViewResult ShowVeggies()
+        {
+            List<Vegetable> AllVeggies = dbContext.Veggies
+                .Include(v => v.BurritosWithVegetable)
+                .ThenInclude(vb => vb.Burrito)
+                .ToList();
+
+            return View(AllVeggies);
         }
 
         [HttpGet("allmasters")]
@@ -157,5 +193,36 @@ namespace EntityIntro.Controllers
                 return View("NewRitoMaster");
             }
         }
+
+        [HttpGet("rito/{ritoId}")]
+        public ViewResult OneRito(int ritoId)
+        {
+            OneRitoWrapper vMod = new OneRitoWrapper();
+            vMod.ThisRito = dbContext.Burritos
+                .Include(b => b.RitoMaster)
+                .Include(b => b.VegetablesInBurrito)
+                .ThenInclude(v => v.Vegetable)
+                .FirstOrDefault(b => b.BurritoId == ritoId);
+
+            vMod.Veggies = dbContext.Veggies.ToList();
+            return View(vMod);
+        }
+
+        [HttpPost("addvegtorito/{ritoId}")]
+        public IActionResult NewVegRito(int ritoId, OneRitoWrapper fromForm)
+        {
+            fromForm.VegRito.BurritoId = ritoId;
+            if(ModelState.IsValid)
+            {
+                dbContext.VegRitos.Add(fromForm.VegRito);
+                dbContext.SaveChanges();
+                return RedirectToAction("OneRito", new { ritoId = ritoId });
+            }
+            else
+            {
+                return RedirectToAction("OneRito", new { ritoId = ritoId});
+            }
+        }
     }
 }
+
