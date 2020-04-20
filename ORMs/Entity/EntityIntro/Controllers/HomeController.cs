@@ -223,6 +223,27 @@ namespace EntityIntro.Controllers
                 return RedirectToAction("OneRito", new { ritoId = ritoId});
             }
         }
+
+        [HttpGet("wrappersample")]
+        public ViewResult DoTheThing()
+        {
+            // object context = new {
+            //     FormModel = new Burrito(), 
+            //     AllMasters = dbContext.RitoMasters.ToList(), 
+            //     AllVeggies = dbContext.Veggies.ToList()
+            // }; 
+            ThingWrapper vMod = new ThingWrapper();
+            vMod.FormModel = new Burrito();
+            vMod.AllMasters = dbContext.RitoMasters.ToList();
+            vMod.AllVeggies = dbContext.Veggies.ToList();
+            return View(vMod);
+        }
+
+        [HttpPost("wrapsub")]
+        public IActionResult WrapSubmit(ThingWrapper fromForm)
+        {
+            return RedirectToAction("DoTheThing");
+        }
     }
 }
 
