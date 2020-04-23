@@ -1,0 +1,86 @@
+@model NewReviewWrapper
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h3><a href="/dashboard">Dashboard</a> | <a href="/newtruck">New Truck</a> | <a href="/newstyle">New Style</a></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="row"><h2>@Model.Truck.Name</h2></div>
+                <div class="row"><h4>Created By: </h4><span>@Model.Truck.User.FullName</span></div>
+                <div class="row"><h4>Styles: </h4></div>
+                <div class="row">
+                    <ul>
+                        @foreach(TruckStyle style in @Model.Truck.TruckStyles)
+                        {
+                            <li>@style.Style.Name</li>
+                        }
+                    </ul>
+                </div>
+                <div class="row"><h4>Description: </h4><span>@Model.Truck.Description</span></div>
+                <div class="row"><h4>Average Rating: </h4><span>@Model.Truck.AvgRating.ToString("0.00")</span></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <ul>
+                    @foreach(Review review in Model.Truck.Reviews)
+                    {
+                        <li>
+                            <div class="col-3">
+                                <p>@review.User.FullName</p>
+                            </div>
+                            <div class="col-9">
+                                <p>@review.Text</p>
+                                <p>Rating: @review.Rating</p>
+                            </div>
+
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col h1">New Truck!</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+                <form asp-action="CreateReview" asp-controller="Home" asp-route-TruckId="@Model.Truck.FoodTruckId" method="post">
+                    <div class="form-group row">
+                        <span class="col-sm-12" asp-validation-for="ReviewForm.Rating"></span>
+                        <label class="col-sm-4">Rating: </label>
+                        <select asp-for="ReviewForm.Rating">
+                            <option value="0">-- Select a Rating --</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <span class="col-sm-12" asp-validation-for="ReviewForm.Text"></span>
+                        <label class="col-sm-4">Review: </label>
+                        <textarea class="col-sm-8 form-control" asp-for="ReviewForm.Text"></textarea>
+                    </div>
+                    <input type="submit" value="Create Review">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

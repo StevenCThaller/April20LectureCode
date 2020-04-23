@@ -1,0 +1,56 @@
+@model DashboardWrapper
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h3>Dashboard | <a href="/newtruck">New Truck</a> | <a href="/newstyle">New Style</a></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <ul>
+                    @foreach(FoodTruck truck in Model.AllTrucks)
+                    {
+                        <li><div class="row">
+                            <div class="col">
+                                <div class="row h4">
+                                    @truck.Name
+                                </div>
+                                <div class="row h5">
+                                    @truck.User.FullName
+                                </div>
+                                <div class="row h5">
+                                    <ul>
+                                        @foreach(TruckStyle style in truck.TruckStyles)
+                                        {
+                                            <li>@style.Style.Name</li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="row h5">Average Rating: @truck.AvgRating.ToString("0.00")</div>
+                            </div>
+                            <div class="col text-right">
+                                @if(truck.UserId == @Model.LoggedUser.UserId)
+                                {
+                                    <a href="/edittruck/@truck.FoodTruckId">Edit</a> <span>|</span>
+                                }
+                                <a href="/review/@truck.FoodTruckId">Review</a>
+
+                            </div>
+                        </div></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
