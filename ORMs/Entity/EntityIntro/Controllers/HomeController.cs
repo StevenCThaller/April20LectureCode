@@ -244,6 +244,13 @@ namespace EntityIntro.Controllers
         {
             return RedirectToAction("DoTheThing");
         }
+
+
+        [HttpGet("hunternumber")]
+        public ViewResult HunterNumber()
+        {
+            return View(10.000000001);
+        }
     }
 }
 
